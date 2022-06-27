@@ -12,6 +12,9 @@ psycopg2 = "*"
 cloudinary = "*"
 django-bootstrap4 = "*"
 django-crispy-forms = "*"
+gunicorn = "*"
+django-heroku = "*"
+whitenoise = "*"
 
 [dev-packages]
 

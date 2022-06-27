@@ -18,7 +18,7 @@ from decouple import config,Csv
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-# import django_heroku
+import django_heroku
 
 MODE=config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
@@ -93,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'mychakula.urls'
@@ -170,7 +171,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 STATIC_URL = 'static/'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -181,7 +182,7 @@ LOGIN_REDIRECT_URL= 'home'
 LOGOUT_REDIRECT_URL= 'home'
 
 # Configure Django App for Heroku.
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 
 # Default primary key field type
@@ -191,8 +192,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # adding config
 cloudinary.config(
-
-  cloud_name="YOUR_CLOUD_NAME", 
-  api_key="YOUR_API_KEY", 
-  api_secret="YOUR_API_SECRET" 
+cloud_name="dgzo0lyrz", 
+api_key="936979898137767", 
+api_secret="Cg4MaPzMgXS-WiNoTSjq7BdItbw"
+#   cloud_name="YOUR_CLOUD_NAME", 
+#   api_key="YOUR_API_KEY", 
+#   api_secret="YOUR_API_SECRET" 
 )
