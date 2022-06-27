@@ -16,17 +16,17 @@
             <!-- Left links -->
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active btn-success" aria-current="page" href="#">Breakfast</a>
+                    <a class="nav-link active btn-success" aria-current="page" href="#category">Breakfast</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active btn-warning" href="#">Lunch</a>
+                    <a class="nav-link active btn-warning" href="#category">Lunch</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active btn-success" href="#">Dinner</a>
+                    <a class="nav-link active btn-success" href="#category">Dinner</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active btn-warning" href="#">Drinks</a>
+                    <a class="nav-link active btn-warning" href="#category">Drinks</a>
                 </li>
             </ul>
             </li>
@@ -58,7 +58,7 @@
                     <h5 class="card-title"> <strong>{{recipe.name|upper}}</strong> </h5>
                     <h5 class="card-title"><strong>Prep-time:</strong> {{recipe.prep_time}}</h5>
                     <h5 class="card-title"><strong>Cook time:</strong> {{recipe.total_time}}</h5>
-                    <span><p> Posted by: {{request.user|title}}</p></span> 
+                    <span><p> Posted by: {{recipe.user.name|title}}</p></span> 
                <a href="{% url 'single_recipe' recipe.id %}" class="btn btn-primary btn-sm"> See details</a>
                     <span>
                         
@@ -69,6 +69,20 @@
 
         </div>
         {% endfor %}
+
+        <div class="col-md-4 text-center" style="color:black;" id="category">
+            <a href="{% url 'home'%}">All</a>
+
+            <h5 style="color:green"> <strong>See recipes by category </strong> </h5>
+            {% for category in categorys %}
+            <li class="list-group-item">
+                <a href="{% url 'home'%}?category={{category.name}}" style="color:black;">{{category.name}}</a>
+
+
+            </li>
+        {% endfor %}
+
+        </div>
 
     </div>
 
