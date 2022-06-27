@@ -20,12 +20,19 @@ def about_us(request):
     return render(request,"about_us.html")
 
 def home(request):
-    recipes=Recipe.objects.all()
+    category=request.GET.get('category')
+    if category == None:
+        recipes=Recipe.objects.all()
+    else:
+        recipes=Recipe.objects.filter(category__name=category)
+        
+    categorys=Category.objects.all()
 
     context = {
-        'recipes':recipes
+        'recipes':recipes,
+        'categorys':categorys
     }
-    return render(request,"home.html",context)
+    return render(request,'home.html',context)
 
 
 def register(request):
@@ -93,18 +100,51 @@ def update_profile(request):
     
     return render(request, 'update_profile.html',context)
 
+@login_required(login_url='login')
 def create_recipe(request):
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-        if form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.user = request.user.profile
-            recipe.save()
-            return redirect('home')
-    else:
-        form = RecipeForm()
-    return render(request, 'create_recipe.html', {'form': form})
+    current_user = request.user.profile
+    recipes = Recipe.objects.all()
+    profiles = Profile.get_profile()
+    for profile in profiles:
+        if profile.user.id == current_user.id:
+            if request.method == 'POST':
+                form = RecipeForm(request.POST,request.FILES)
+                if form.is_valid():
+                    new_recipe = form.save(commit=False)
+                    new_recipe.user = current_user
+                    new_recipe.profile = profile
+                    new_recipe.save()
+                    print(new_recipe)
+                    return redirect('home')
+            else:
+                form = RecipeForm()
+                
+            context = {
+                'current_user':current_user,
+                'form':form,
+                'recipes':recipes,
+                'profiles':profiles
+                
+            }
+            return render(request,'create_recipe.html', context)
 
+
+
+    # recipe=Recipe.objects.all()
+    # profiles = Profile.get_profile()
+    # if request.method == 'POST':
+    #     form = RecipeForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         new_recipe = form.save(commit=False)
+    #         new_recipe.user=request.user.profile
+    #         new_recipe.profile=profile
+    #         new_recipe.recipe = recipe
+    #         new_recipe.save()
+    #         return redirect('home')
+    # else:
+    #     form = RecipeForm()
+    # return render(request, 'create_recipe.html', {'form': form})
+    
 def search_recipe(request):
     if 'recipe' in request.GET and request.GET["recipe"]:
     # if request.method == 'GET':
