@@ -9,7 +9,7 @@ Chakula Chetu ('our food' in swahili) is a one of a kind website exclusively ded
 
 Sandra 
 
-You can view the site at:[Chakula Chetu]()
+You can view the site at:[Chakula Chetu](https://chakulachetu.herokuapp.com/)
 
 ## Screenshot
 ![Chakula Chetu](static/photos/Screenshot%20from%202022-06-27%2013-11-10.png)
