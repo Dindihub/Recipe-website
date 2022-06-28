@@ -16,8 +16,8 @@ urlpatterns=[
     path('create_recipe', views.create_recipe, name='create_recipe'),
     path('search', views.search_recipe, name='search'),
     path ('single_recipe/<str:id>/',views.single_recipe,name='single_recipe'),
-    # path('post/<hood_id>', views.create_post, name='post'),
-    # path('addbusiness/<hood_id>',views.add_business, name='addbusiness'),
+    path('update_recipe/<str:id>/', views.update_recipe, name='update_recipe'),
+    path('delete_recipe/<int:id>',views.delete_recipe, name='delete_recipe'),
     
     
 ]

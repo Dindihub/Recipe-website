@@ -70,10 +70,12 @@ def log_out(request):
 @login_required(login_url='login')
 def profile(request):
     profiles=Profile.objects.get(user=request.user)
+    recipes=Recipe.objects.filter(user=request.user.profile)
        
     context={
         
-        'profiles':profiles, 
+        'profiles':profiles,
+        'recipes' :recipes
         }
     return render(request, 'profile.html',context)
 
@@ -129,21 +131,31 @@ def create_recipe(request):
             return render(request,'create_recipe.html', context)
 
 
+@login_required(login_url='login')
+def update_recipe(request,id):
+    recipe=Recipe.objects.get(id=id)
+    form = RecipeForm(instance=recipe)
+    if request.method=='POST':
+        form=RecipeForm(request.POST,instance=recipe)
+        if  form.is_valid():
+            form.save()
+            return redirect('profile')
 
-    # recipe=Recipe.objects.all()
-    # profiles = Profile.get_profile()
-    # if request.method == 'POST':
-    #     form = RecipeForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         new_recipe = form.save(commit=False)
-    #         new_recipe.user=request.user.profile
-    #         new_recipe.profile=profile
-    #         new_recipe.recipe = recipe
-    #         new_recipe.save()
-    #         return redirect('home')
-    # else:
-    #     form = RecipeForm()
-    # return render(request, 'create_recipe.html', {'form': form})
+    context={'form': form}
+
+    return render(request,'update_recipe.html',context)
+
+             
+@login_required(login_url='login')   
+def delete_recipe(request, id):
+    recipe=Recipe.objects.get(id=id)
+    if request.method == 'POST':
+        recipe.delete() 
+        return redirect('profile')
+
+    context={'recipe': recipe}
+    return render(request,'delete_recipe.html',context)
+   
     
 def search_recipe(request):
     if 'recipe' in request.GET and request.GET["recipe"]:
