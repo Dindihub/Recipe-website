@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-requests = "*"
 django = "*"
 dj-database-url = "*"
 python-decouple = "*"
@@ -15,6 +14,7 @@ django-crispy-forms = "*"
 gunicorn = "*"
 django-heroku = "*"
 whitenoise = "*"
+requests = "*"
 
 [dev-packages]
 

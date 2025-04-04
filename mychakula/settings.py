@@ -19,12 +19,17 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import django_heroku
+import environ  # <-- Updated!
 
+env = environ.Env(  # <-- Updated!
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 MODE=config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 # development
-if config('MODE')=="dev":
+if config('MODE', default='dev') == "dev":
    DATABASES = {
        'default': {
            'ENGINE':'django.db.backends.postgresql_psycopg2',
@@ -62,8 +67,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.fly.dev']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.fly.dev']
 
 # Application definition
 
@@ -74,6 +80,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic', 
     'chakula',
     'cloudinary',
     'bootstrap4',
@@ -181,8 +188,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL= 'home'
 LOGOUT_REDIRECT_URL= 'home'
 
-# Configure Django App for Heroku.
-django_heroku.settings(locals())
+
 
 
 # Default primary key field type
