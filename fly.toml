@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for recipe-website-misty-moon-6718 on 2025-04-04T17:10:36+03:00
+# fly.toml app configuration file generated for recipe-website-late-frost-9380 on 2025-04-04T20:37:36+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'recipe-website-misty-moon-6718'
+app = 'recipe-website-late-frost-9380'
 primary_region = 'jnb'
 console_command = '/code/manage.py shell'
 
