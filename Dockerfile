@@ -15,12 +15,11 @@ RUN mkdir -p /code
 
 WORKDIR /code
 
-RUN pip install pipenv
-COPY Pipfile Pipfile.lock /code/
-RUN pipenv install --deploy --system
+COPY requirements.txt /code/
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . /code
 
-ENV SECRET_KEY "drgEmmOyzwr76LSQBHSuMNxUgnrfWRyGYgtHxoHaR8cPwlSuR0"
+ENV SECRET_KEY "F3Jaclwy0ScHU6PdzILiIkcuV1aywkMSSh9X7xI2Lh1rjqQ6Oz"
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
